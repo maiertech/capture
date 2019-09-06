@@ -1,0 +1,5 @@
+{
+  "version": 2,
+  "scope": "maiertech",
+  "routes": [{ "src": "/api", "methods": ["POST"], "dest": "/api/capture.js" }]
+}

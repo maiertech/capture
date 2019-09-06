@@ -23,7 +23,7 @@ Returns a screenshot in PNG format.
 
 This API is built with [`chrome-aws-lambda`](https://github.com/alixaxel/chrome-aws-lambda), which [requires Node v8.10.x to work properly](https://github.com/alixaxel/chrome-aws-lambda#usage). This Node version is also the [default version for Zeit Now v2](https://zeit.co/docs/v2/advanced/builders#node.js-version).
 
-For clarity, `package.json` should include the following entry:
+`package.json` should include the following entry:
 
 ```
 "engines": {
@@ -31,4 +31,12 @@ For clarity, `package.json` should include the following entry:
 }
 ```
 
-However, this would break the following `devDependecies`: latest `lint-staged` and `now`. Since Node `8.10.x` is currently Zeit Now's default, we can leave the `engines` entry out and set `.nvmrc` to `v8` to make everything work locally.
+However, this would break `devDependecies` `lint-staged` and `now`, which require a Node version newer than `8.10.x`. To solve this problem we put
+
+```
+"engines": {
+  "node": "^8.10"
+}
+```
+
+and set `.nvmrc` to `v8` to make everything work locally.

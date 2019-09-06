@@ -11,11 +11,25 @@ Take a screenshot of a website.
 - `url` (required): Capture screenshot of this URL.
 - `device` (required): Device name from O[Puppeteer's `DeviceDescriptors` module](https://github.com/GoogleChrome/puppeteer/blob/master/lib/DeviceDescriptors.js), e.g., `iPhone X landscape`.
 
-## Example Requests
+## Example Request
+
+Capture screenshot of https://www.google.com with iPhone X:
+
+```
+curl --request POST \
+  --url https://capture.maier.tech/api \
+  --header 'content-type: application/json' \
+  --data '{
+	"url": "https://www.google.com",
+	"device": "iPhone X"
+}'
+```
+
+Note that the screenshot is always taken with [Puppeteer](https://pptr.dev/) using the resolution and pixel density of the device provided as `device` parameter.
 
 ## Response
 
-Returns a screenshot in PNG format.
+Returns a screenshot in PNG format with the resolution and pixel density of the corresponding `device`.
 
 ## Errors
 
@@ -40,3 +54,23 @@ However, this would break `devDependecies` `lint-staged` and `now`, which requir
 ```
 
 and set `.nvmrc` to `v8` to make everything work locally.
+
+## Running the Capture API locally
+
+Dependency [`chrome-aws-lambda`](https://github.com/alixaxel/chrome-aws-lambda) does not run locally. In order to make [this workaround](https://github.com/alixaxel/chrome-aws-lambda/wiki/HOWTO:-Local-Development#workaround) work on for deployments to Zeit Now, we need to add
+
+```
+"build": {
+  "env": {
+    "NODE_ENV": "production"
+  }
+},
+```
+
+to `now.json`. This ensures that `devDependencies` are not installed for the build. Now you can run
+
+```
+npx now dev
+```
+
+locally and use a REST client such as [Insomnia](https://insomnia.rest/) to run API queries against http://localhost:3000/api.

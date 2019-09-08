@@ -70,7 +70,7 @@ Dependency [`chrome-aws-lambda`](https://github.com/alixaxel/chrome-aws-lambda) 
 to `now.json`. This ensures that `devDependencies` are not installed for the build. Now you can run
 
 ```
-npx now dev
+yarn start
 ```
 
-locally and use a REST client such as [Insomnia](https://insomnia.rest/) to run API queries against http://localhost:3000/api.
+locally and use a REST client such as [Insomnia](https://insomnia.rest/) to run API queries against http://localhost:3000/api. This command launches [`now dev`](https://zeit.co/docs/v2/serverless-functions/introduction#local-development) under the hood.

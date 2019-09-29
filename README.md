@@ -9,7 +9,7 @@ Take a screenshot of a website.
 ## Parameters
 
 - `url` (required): Capture screenshot of this URL.
-- `device` (required): Device name from O[Puppeteer's `DeviceDescriptors` module](https://github.com/GoogleChrome/puppeteer/blob/master/lib/DeviceDescriptors.js), e.g., `iPhone X landscape`.
+- `device` (required): Device name from [Puppeteer's `DeviceDescriptors` module](https://github.com/GoogleChrome/puppeteer/blob/master/lib/DeviceDescriptors.js), e.g., `iPhone X landscape`.
 
 ## Example Request
 
@@ -74,3 +74,13 @@ yarn start
 ```
 
 locally and use a REST client such as [Insomnia](https://insomnia.rest/) to run API queries against http://localhost:3000/api. This command launches [`now dev`](https://zeit.co/docs/v2/serverless-functions/introduction#local-development) under the hood.
+
+Running the capture API locally on a Mac is currently broken and results in this error
+
+```
+{
+  "message": "Failed to capture screenshot: Failed to launch chrome!\n/tmp/chromium: /tmp/chromium: cannot execute binary file\n\n\nTROUBLESHOOTING: https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md\n"
+}
+```
+
+See https://github.com/maiertech/capture/issues/7.

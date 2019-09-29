@@ -1,6 +1,7 @@
 const validator = require('validator');
 const { devices } = require('puppeteer-core');
 const chrome = require('chrome-aws-lambda');
+const axios = require('axios');
 
 // The puppeteer getter returns `puppeteer` when running locally and `puppeteer-core` when running on AWS.
 // https://github.com/alixaxel/chrome-aws-lambda/wiki/HOWTO:-Local-Development#workaround
@@ -32,23 +33,47 @@ module.exports = async (request, response) => {
       param: 'url',
       value: url,
       message: 'Invalid URL.',
-      validate: () =>
-        validator.isURL(url, {
-          protocols: ['http', 'https'],
-          require_protocol: true,
-        }),
+      validate: async () => {
+        // Check if URL is syntactically correct.
+        if (
+          !validator.isURL(url, {
+            protocols: ['http', 'https'],
+            require_protocol: true,
+          })
+        ) {
+          return false;
+        }
+        // Check if URL can be resolved.
+        try {
+          await axios.head(url);
+        } catch (error) {
+          return false;
+        }
+        return true;
+      },
     },
     {
       param: 'device',
       value: device,
       message: 'Invalid device.',
-      validate: () => devices[device],
+      // This validation must return promise, too.
+      validate: () => {
+        if (devices[device]) {
+          return Promise.resolve(true);
+        }
+        return Promise.resolve(false);
+      },
     },
   ];
 
-  // Every failed validation is converted into error message.
+  // Run all validations and wait until all validation promises have resolved.
+  const results = await Promise.all(
+    validations.map(validation => validation.validate())
+  );
+
+  // Filter validations and keep only validations to convert them to error messages.
   const errors = validations
-    .filter(validation => !validation.validate())
+    .filter((validation, index) => !results[index])
     .map(({ param, value, message }) => ({ param, value, message }));
 
   if (errors.length !== 0) {

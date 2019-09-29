@@ -28,6 +28,12 @@
     "coverage": "jest --collect-coverage",
     "inspect": "node --inspect-brk node_modules/.bin/jest"
   },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "chrome-aws-lambda": "^1.19.0",
+    "puppeteer-core": "^1.19.0",
+    "validator": "^11.1.0"
+  },
   "devDependencies": {
     "eslint": "^6.1.0",
     "eslint-plugin-shopify": "^30.0.1",
@@ -39,11 +45,5 @@
     "prettier": "^1.17.1",
     "pretty-quick": "^1.11.0",
     "puppeteer": "^1.19.0"
-  },
-  "dependencies": {
-    "axios": "^0.19.0",
-    "chrome-aws-lambda": "^1.19.0",
-    "puppeteer-core": "^1.19.0",
-    "validator": "^11.1.0"
   }
 }

@@ -1,6 +1,6 @@
 const capture = require('../api/capture');
 
-test('invalid url (invalid syntax)', async () => {
+test('invalid url param', async () => {
   const params = {
     url: 'invalid',
     device: 'iPhone X',
@@ -17,12 +17,12 @@ test('invalid url (invalid syntax)', async () => {
     {
       param: 'url',
       value: 'invalid',
-      message: 'Invalid URL.',
+      message: 'Invalid URL syntax',
     },
   ]);
 });
 
-test('invalid url (unresolvable)', async () => {
+test('unresolvable url param', async () => {
   const params = {
     url: 'https://invalid.maier.tech',
     device: 'iPhone X',
@@ -39,7 +39,7 @@ test('invalid url (unresolvable)', async () => {
     {
       param: 'url',
       value: 'https://invalid.maier.tech',
-      message: 'Invalid URL.',
+      message: 'Cannot resolve URL (Request failed with status code 404)',
     },
   ]);
 });
@@ -61,7 +61,7 @@ test('invalid device param', async () => {
     {
       param: 'device',
       value: 'invalid',
-      message: 'Invalid device.',
+      message: 'Invalid device',
     },
   ]);
 });

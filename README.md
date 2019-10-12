@@ -83,4 +83,4 @@ Running the capture API locally on a Mac is currently broken and results in this
 }
 ```
 
-See https://github.com/maiertech/capture/issues/7.
+See [this issue](https://github.com/maiertech/capture/issues/7).

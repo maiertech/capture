@@ -32,7 +32,6 @@ module.exports = async (request, response) => {
     {
       param: 'url',
       value: url,
-      message: 'Invalid URL.',
       validate: async () => {
         // Check if URL is syntactically correct.
         if (
@@ -41,40 +40,60 @@ module.exports = async (request, response) => {
             require_protocol: true,
           })
         ) {
-          return false;
+          return {
+            valid: false,
+            message: 'Invalid URL syntax',
+          };
         }
         // Check if URL can be resolved.
         try {
           await axios.head(url);
         } catch (error) {
-          return false;
+          return {
+            valid: false,
+            message: `Cannot resolve URL (${error.message})`,
+          };
         }
-        return true;
+        return { valid: true };
       },
     },
     {
       param: 'device',
       value: device,
-      message: 'Invalid device.',
       // This validation must return promise, too.
       validate: () => {
         if (devices[device]) {
-          return Promise.resolve(true);
+          return Promise.resolve({ valid: true });
         }
-        return Promise.resolve(false);
+        return Promise.resolve({ valid: false, message: 'Invalid device' });
       },
     },
   ];
 
-  // Run all validations and wait until all validation promises have resolved.
-  const results = await Promise.all(
-    validations.map(validation => validation.validate())
-  );
+  // Run all validations.
+  const validated = validations.map(({ param, value, validate }) => ({
+    param,
+    value,
+    result: validate(),
+  }));
 
-  // Filter validations and keep only validations to convert them to error messages.
-  const errors = validations
-    .filter((validation, index) => !results[index])
-    .map(({ param, value, message }) => ({ param, value, message }));
+  // Await all validation promises.
+  const promises = await Promise.all(validated.map(({ result }) => result));
+
+  // Create array with param, value and validation result (from promise).
+  const results = validated.map((validation, index) => ({
+    ...validation,
+    result: promises[index],
+  }));
+
+  // Filter results and keep only failed validations to convert them to error messages.
+  const errors = results
+    .filter(({ result }) => !result.valid)
+    .map(({ param, value, result }) => ({
+      param,
+      value,
+      message: result.message,
+    }));
 
   if (errors.length !== 0) {
     response.status(400);

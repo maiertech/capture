@@ -1015,10 +1015,12 @@ chownr@^1.1.1:
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.1.2.tgz#a18f1e0b269c8a6a5d3c86eb298beb14c3dd7bf6"
   integrity sha512-GkfeAQh+QNy3wquu9oIZr6SS5x7wGdSgNQvD10X3r+AZr1Oys22HW8kAmDMvNg2+Dm0TeGaEuO8gFwdBXxwO8A==
 
-chrome-aws-lambda@1.20.1:
-  version "1.20.1"
-  resolved "https://registry.yarnpkg.com/chrome-aws-lambda/-/chrome-aws-lambda-1.20.1.tgz#d63c1332d2bfafc7fdac0b91aeba6bfb962aed34"
-  integrity sha512-qFebQehXLEoRgngNl9c04V8H9oEtaDSRPqFT3qivN1px78pyG4bLgXsnsGEtMvW9QZapEajTP9h5gfOxSgNs9g==
+chrome-aws-lambda@1.20.2:
+  version "1.20.2"
+  resolved "https://registry.yarnpkg.com/chrome-aws-lambda/-/chrome-aws-lambda-1.20.2.tgz#9985440cbd819fa1131910facee6e0e13a1306b7"
+  integrity sha512-hHJFnCOOgpkIUy1XiCvsytoxNLm4d7YaHC4mukhNATcSE2T122JEkkfQabKxaY8J3BJKMj5Iwu4YUqVp3ZxrFA==
+  dependencies:
+    lambdafs "^1.3.0"
 
 ci-info@^2.0.0:
   version "2.0.0"
@@ -3485,6 +3487,13 @@ kleur@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
+
+lambdafs@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/lambdafs/-/lambdafs-1.3.0.tgz#7e369cedc9a09623bb365fa99a1113c2ab2fc7ae"
+  integrity sha512-HqRPmEgtkTW4sCYDUjTEuTGkjCHuLvtZU8iM8GkhD7SpjW4AJJbBk86YU4K43sWGuW5Vmzp1lVCx4ab/kJsuBw==
+  dependencies:
+    tar-fs "^2.0.0"
 
 left-pad@^1.3.0:
   version "1.3.0"

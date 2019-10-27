@@ -57,25 +57,11 @@ and set `.nvmrc` to `v8` to make everything work locally.
 
 ## Running the Capture API locally
 
-Dependency [`chrome-aws-lambda`](https://github.com/alixaxel/chrome-aws-lambda) does not run locally. In order to make [this workaround](https://github.com/alixaxel/chrome-aws-lambda/wiki/HOWTO:-Local-Development#workaround) work on for deployments to Zeit Now, we need to add
+Dependency [`chrome-aws-lambda`](https://github.com/alixaxel/chrome-aws-lambda) does not run locally on a Mac. The dos mention [this workaround](https://github.com/alixaxel/chrome-aws-lambda/wiki/HOWTO:-Local-Development#workaround) to address the issue. Adding `puppeteer` to `devDependencies` triggers `puppeteer` to be used instaed of `puppeteer-core`.
 
-```
-"build": {
-  "env": {
-    "NODE_ENV": "production"
-  }
-},
-```
+The current lambda is written using [Zeit's helpers for serverless functions](https://zeit.co/blog/now-node-helpers). This makes writing serverless functions easy but comes with the drawback that the serverless function can be executed only in a Zeit environment. For local execution this means you have to use `now dev` to run the serverless function locally.
 
-to `now.json`. This ensures that `devDependencies` are not installed for the build. Now you can run
-
-```
-yarn start
-```
-
-locally and use a REST client such as [Insomnia](https://insomnia.rest/) to run API queries against http://localhost:3000/api. This command launches [`now dev`](https://zeit.co/docs/v2/serverless-functions/introduction#local-development) under the hood.
-
-Running the capture API locally on a Mac is currently broken and results in this error
+`now dev` breaks above mentioned workaround and therefore, it is not possible to run the Capture API locally. You will see this error:
 
 ```
 {
@@ -83,4 +69,4 @@ Running the capture API locally on a Mac is currently broken and results in this
 }
 ```
 
-See [this issue](https://github.com/maiertech/capture/issues/7).
+which is caused by the labmda trying to run an AWS compatible puppeteer on a Mac. You can track this issue [here](https://github.com/maiertech/capture/issues/7).

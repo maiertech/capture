@@ -13,7 +13,7 @@ Take a screenshot of a website.
 
 ## Example Request
 
-Capture screenshot of https://www.google.com with iPhone X:
+Capture screenshot of https://www.google.com with iPhone X (portait):
 
 ```
 curl --request POST \
@@ -33,9 +33,11 @@ Returns a screenshot in PNG format with the resolution and pixel density of the 
 
 ## Errors
 
+To be done.
+
 ## Node version
 
-This API is built with [`chrome-aws-lambda`](https://github.com/alixaxel/chrome-aws-lambda), which [requires Node v8.10.x to work properly](https://github.com/alixaxel/chrome-aws-lambda#usage). This Node version is also the [default version for Zeit Now v2](https://zeit.co/docs/v2/advanced/builders#node.js-version).
+This API is built with [`chrome-aws-lambda`](https://github.com/alixaxel/chrome-aws-lambda), which [requires Node v8.10.x to work properly](https://github.com/alixaxel/chrome-aws-lambda#usage). This Node version is also the [default for Zeit Now v2](https://zeit.co/docs/builders#official-builders/static-builds/static-build-project-node-js-version).
 
 `package.json` should include the following entry:
 
@@ -71,7 +73,7 @@ http://localhost:3000
 
 (or any other path such as http://localhost:3000/api) using [micro-dev](https://github.com/zeit/micro-dev).
 
-It is not possible to launch the API locally using `now dev`. Dependency [`chrome-aws-lambda`](https://github.com/alixaxel/chrome-aws-lambda) does not run on a Mac. Its docs mention [a workaround](https://github.com/alixaxel/chrome-aws-lambda/wiki/HOWTO:-Local-Development#workaround) to address the issue. Adding `puppeteer` to `devDependencies` triggers `puppeteer` (which run on a Mac) to be used instaed of `puppeteer-core`.
+It is not possible to launch the API locally using `now dev`. Dependency [`chrome-aws-lambda`](https://github.com/alixaxel/chrome-aws-lambda) does not run on a Mac. Its docs mention [a workaround](https://github.com/alixaxel/chrome-aws-lambda/wiki/HOWTO:-Local-Development#workaround) to address the issue. Adding `puppeteer` to `devDependencies` triggers the use of `puppeteer` (which runs on a Mac) instaed of `puppeteer-core`.
 
 This workaround breaks with `now dev` because it compiles the lambda and its dependecies into a single file using [ncc](https://github.com/zeit/ncc). You will see this error:
 
@@ -81,6 +83,6 @@ This workaround breaks with `now dev` because it compiles the lambda and its dep
 }
 ```
 
-which is caused by the lambda trying to launch a Linux Puppeteer on Mac.
+which is caused by the lambda trying to launch a Linux executable on Mac.
 
 Also note that we cannot use [Zeit's helpers for serverless functions](https://zeit.co/blog/now-node-helpers) because this would make it impossible to run the API locally with micro-dev. Using [micro](https://github.com/zeit/micro) to parse the request body and send a response provides convenience similar to using Zeit's helpers for serverless functions. A side effect of using micro and micro-dev is that the lambda can be debugged locally.

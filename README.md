@@ -57,11 +57,23 @@ and set `.nvmrc` to `v8` to make everything work locally.
 
 ## Running the Capture API locally
 
-Dependency [`chrome-aws-lambda`](https://github.com/alixaxel/chrome-aws-lambda) does not run locally on a Mac. The dos mention [this workaround](https://github.com/alixaxel/chrome-aws-lambda/wiki/HOWTO:-Local-Development#workaround) to address the issue. Adding `puppeteer` to `devDependencies` triggers `puppeteer` to be used instaed of `puppeteer-core`.
+Run
 
-The current lambda is written using [Zeit's helpers for serverless functions](https://zeit.co/blog/now-node-helpers). This makes writing serverless functions easy but comes with the drawback that the serverless function can be executed only in a Zeit environment. For local execution this means you have to use `now dev` to run the serverless function locally.
+```
+yarn run dev
+```
 
-`now dev` breaks above mentioned workaround and therefore, it is not possible to run the Capture API locally. You will see this error:
+to launch the API locally at
+
+```
+http://localhost:3000
+```
+
+(or any other path such as http://localhost:3000/api) using [micro-dev](https://github.com/zeit/micro-dev).
+
+It is not possible to launch the API locally using `now dev`. Dependency [`chrome-aws-lambda`](https://github.com/alixaxel/chrome-aws-lambda) does not run on a Mac. Its docs mention [a workaround](https://github.com/alixaxel/chrome-aws-lambda/wiki/HOWTO:-Local-Development#workaround) to address the issue. Adding `puppeteer` to `devDependencies` triggers `puppeteer` (which run on a Mac) to be used instaed of `puppeteer-core`.
+
+This workaround breaks with `now dev` because it compiles the lambda and its dependecies into a single file using [ncc](https://github.com/zeit/ncc). You will see this error:
 
 ```
 {
@@ -69,4 +81,6 @@ The current lambda is written using [Zeit's helpers for serverless functions](ht
 }
 ```
 
-which is caused by the labmda trying to run an AWS compatible puppeteer on a Mac. You can track this issue [here](https://github.com/maiertech/capture/issues/7).
+which is caused by the lambda trying to launch a Linux Puppeteer on Mac.
+
+Also note that we cannot use [Zeit's helpers for serverless functions](https://zeit.co/blog/now-node-helpers) because this would make it impossible to run the API locally with micro-dev. Using [micro](https://github.com/zeit/micro) to parse the request body and send a response provides convenience similar to using Zeit's helpers for serverless functions. A side effect of using micro and micro-dev is that the lambda can be debugged locally.

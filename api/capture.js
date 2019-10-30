@@ -2,12 +2,13 @@ const validator = require('validator');
 const { devices } = require('puppeteer-core');
 const chrome = require('chrome-aws-lambda');
 const axios = require('axios');
+const { json, send } = require('micro');
 
 // The puppeteer getter returns `puppeteer` when running locally and `puppeteer-core` when running on AWS.
 // https://github.com/alixaxel/chrome-aws-lambda/wiki/HOWTO:-Local-Development#workaround
 const puppeteer = chrome.puppeteer;
 
-// device: string.
+// Use Puppeteer to capture screenshot.
 async function capture({ device, url }) {
   const browser = await puppeteer.launch({
     args: chrome.args,
@@ -23,9 +24,9 @@ async function capture({ device, url }) {
   return screenshot;
 }
 
+// Use Micro to process request and response.
 module.exports = async (request, response) => {
-  const url = request.body.url;
-  const device = request.body.device;
+  const { url, device } = await json(request);
 
   // Validate request parameters.
   const validations = [
@@ -96,8 +97,7 @@ module.exports = async (request, response) => {
     }));
 
   if (errors.length !== 0) {
-    response.status(400);
-    response.json(errors);
+    send(response, 400, errors);
     return;
   }
 
@@ -107,8 +107,7 @@ module.exports = async (request, response) => {
   try {
     screenshot = await capture({ device, url });
   } catch (error) {
-    response.status(500);
-    response.json({
+    send(response, 500, {
       message: `Failed to capture screenshot: ${error.message}`,
     });
     return;
@@ -116,6 +115,5 @@ module.exports = async (request, response) => {
 
   // Return screenshot.
   response.setHeader('Content-Type', 'image/png');
-  response.status(200);
-  response.send(screenshot);
+  send(response, 200, screenshot);
 };

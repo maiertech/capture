@@ -20,17 +20,19 @@
     "node": "^8.10"
   },
   "scripts": {
-    "start": "now dev",
+    "dev": "micro-dev api/capture.js",
+    "dev:inspect": "node --inspect node_modules/.bin/micro-dev api/capture.js",
     "purge": "rm -rf ./node_modules",
     "lint": "eslint . --ignore-path .gitignore",
     "format": "pretty-quick",
     "test": "jest",
-    "coverage": "jest --collect-coverage",
-    "inspect": "node --inspect-brk node_modules/.bin/jest"
+    "test:coverage": "jest --collect-coverage",
+    "test:inspect": "node --inspect-brk node_modules/.bin/jest"
   },
   "dependencies": {
     "axios": "0.19.0",
     "chrome-aws-lambda": "2.0.0",
+    "micro": "^9.3.4",
     "puppeteer-core": "2.0.0",
     "validator": "11.1.0"
   },
@@ -38,12 +40,13 @@
     "eslint": "6.6.0",
     "eslint-plugin-shopify": "31.0.0",
     "husky": "3.0.9",
-    "iltorb": "2.4.3",
     "jest": "24.9.0",
     "lint-staged": "9.4.2",
+    "micro-dev": "^3.0.0",
     "now": "16.4.3",
     "prettier": "1.18.2",
     "pretty-quick": "2.0.0",
-    "puppeteer": "2.0.0"
+    "puppeteer": "2.0.0",
+    "test-listen": "^1.1.0"
   }
 }

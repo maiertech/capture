@@ -35,28 +35,6 @@ Returns a screenshot in PNG format with the resolution and pixel density of the 
 
 To be done.
 
-## Node version
-
-This API is built with [`chrome-aws-lambda`](https://github.com/alixaxel/chrome-aws-lambda), which [requires Node v8.10.x to work properly](https://github.com/alixaxel/chrome-aws-lambda#usage). This Node version is also the [default for Zeit Now v2](https://zeit.co/docs/builders#official-builders/static-builds/static-build-project-node-js-version).
-
-`package.json` should include the following entry:
-
-```
-"engines": {
-  "node": "8.10.x"
-}
-```
-
-However, this would break `devDependecies` `lint-staged` and `now`, which require a Node version newer than `8.10.x`. To solve this problem we put
-
-```
-"engines": {
-  "node": "^8.10"
-}
-```
-
-and set `.nvmrc` to `v8` to make everything work locally.
-
 ## Running the Capture API locally
 
 Run

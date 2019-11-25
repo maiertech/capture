@@ -73,7 +73,7 @@ http://localhost:3000
 
 (or any other path such as http://localhost:3000/api) using [micro-dev](https://github.com/zeit/micro-dev).
 
-It is not possible to launch the API locally using `now dev`. Dependency [`chrome-aws-lambda`](https://github.com/alixaxel/chrome-aws-lambda) does not run on a Mac. Its docs mention [a workaround](https://github.com/alixaxel/chrome-aws-lambda/wiki/HOWTO:-Local-Development#workaround) to address the issue. Adding `puppeteer` to `devDependencies` triggers the use of `puppeteer` (which runs on a Mac) instaed of `puppeteer-core`.
+It is not possible to launch the API locally using `now dev`. Dependency [`chrome-aws-lambda`](https://github.com/alixaxel/chrome-aws-lambda) does not run on a Mac. Its docs mention [a workaround](https://github.com/alixaxel/chrome-aws-lambda/wiki/HOWTO:-Local-Development#workaround) to address the issue. Adding `puppeteer` to `devDependencies` triggers the use of `puppeteer` (which runs on a Mac) instead of `puppeteer-core`.
 
 This workaround breaks with `now dev` because it compiles the lambda and its dependecies into a single file using [ncc](https://github.com/zeit/ncc). You will see this error:
 

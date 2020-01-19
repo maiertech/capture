@@ -43,7 +43,7 @@
     "jest": "24.9.0",
     "lint-staged": "10.0.0",
     "micro-dev": "3.0.0",
-    "now": "16.7.0",
+    "now": "16.7.3",
     "prettier": "1.19.1",
     "pretty-quick": "2.0.1",
     "puppeteer": "2.0.0",

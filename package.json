@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "axios": "0.19.2",
-    "chrome-aws-lambda": "2.0.1",
+    "chrome-aws-lambda": "2.0.2",
     "micro": "9.3.4",
     "puppeteer-core": "2.1.0",
     "validator": "12.2.0"

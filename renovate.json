@@ -4,5 +4,11 @@
   "labels": ["renovate"],
   "reviewers": ["454de6e"],
   "semanticCommits": false,
+  "packageRules": [
+    {
+      "packagePatterns": ["puppeteer"],
+      "groupName": "puppeteer packages"
+    }
+  ],
   "schedule": "every weekend"
 }
